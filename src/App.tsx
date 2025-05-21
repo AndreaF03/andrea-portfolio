@@ -1,26 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { ThemeProvider } from 'styled-components';
+import { GlobalStyle } from './styles/global';
+import { lightTheme, darkTheme } from './styles/theme';
+import { Home } from './components/sections/Home';
+import { About } from './components/sections/About';
+import { Projects } from './components/sections/Projects';
+import { Contact } from './components/sections/Contact';
+import { Navbar } from './components/Navbar';
+import { Footer } from './components/Footer';
+import { ThemeToggle } from './components/ThemeToggle';
+import { SEO } from './components/SEO';
+import { Cursor } from './components/Cursor';
+import { Loader } from './components/Loader';
 
-function App() {
+const App: React.FC = () => {
+  const [darkMode, setDarkMode] = useState(false);
+
+  const toggleDarkMode = () => setDarkMode(!darkMode);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+
+      <SEO />
+      <GlobalStyle />
+      <Loader />
+      <Cursor />
+      <ThemeToggle darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+      <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+      <Home />
+      <About />
+      <Projects />
+      <Contact />
+      <Footer />
+    </ThemeProvider>
   );
-}
+};
 
 export default App;
